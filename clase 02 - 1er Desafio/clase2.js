@@ -4,7 +4,7 @@ let coderPropaganda = "Alumno : Juan Vidal - Comisión: 31030"
 let coderEntrega = "Desafio: Clase 2 - Clases"
 let coderPoweredBy = "Powered by NodeJS / CoderHouse"
 
-function beginProgram() {
+function sayHi() {
     console.clear();
     console.log(coderPropaganda);
     console.log(coderEntrega);
@@ -12,7 +12,7 @@ function beginProgram() {
     return;
 }
 
-function endProgram() {
+function sayBye() {
     console.log("");
     console.log(coderPoweredBy);
     console.log("");
@@ -29,8 +29,6 @@ class userLibro {
 
 class Usuario {
     constructor(nombre, apellido, libros = [], mascotas = []) {
-        if (!(this instanceof Usuario)) return new Usuario(nombre, apellido, libros = [], mascotas = []);
-
         this.nombre = nombre;
         this.apellido = apellido;
         this.libros = libros;
@@ -43,7 +41,6 @@ class Usuario {
 
     addMascota(strMascota) {
         this.mascotas.push(strMascota);
-        //console.log("addMascota() Param=",`${strMascota}`, "count=",`${this.mascotas.length}`);
         return;
     }
 
@@ -51,9 +48,9 @@ class Usuario {
         return this.mascotas.length;
     }
 
-    getMascotasTypes() {
+    showMascotasTypes() {
         this.mascotas.forEach(mascota => {
-            console.log("       ", mascota)
+            console.log("       * ", mascota)
         });
     }
 
@@ -67,14 +64,12 @@ class Usuario {
     }
 
     getBookNames() {
-        this.libros.forEach(libro => {
-            console.log("       ", libro.nombre)
-        });
+        return this.libros;
     }
 }
 
 
-beginProgram();
+sayHi();
 
 let johnDoe = new Usuario("Elon", "Musk");
 
@@ -85,7 +80,7 @@ johnDoe.addMascota("Perro");
 johnDoe.addMascota("Conejo");
 
 console.log("   Tiene", `${johnDoe.countMascotas()}`, "mascotas:");
-johnDoe.getMascotasTypes();
+johnDoe.showMascotasTypes();
 
 console.log("");
 
@@ -93,6 +88,9 @@ johnDoe.addBook("El señor de las moscas", "William Golding");
 johnDoe.addBook("Fundacion", "Isaac Asimov");
 console.log("   Tiene", `${johnDoe.countLibros()}`, "libros:");
 
-johnDoe.getBookNames();
+let bookArr = johnDoe.getBookNames();
+bookArr.forEach(book => {
+    console.log(`       * "${ book.nombre }" escrito por: ${ book.autor }`);
+});
 
-endProgram();
+sayBye();
