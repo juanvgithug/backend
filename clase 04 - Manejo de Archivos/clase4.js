@@ -1,17 +1,45 @@
 // Alumno : Juan Vidal - Comisión 31030
 // Desafio Clase 4 - Manejo de Archivos
 
-// General 
-const coderPropaganda = " Alumno : \x1b[1m\x1b[35mJuan Vidal\x1b[0m - Comisión: \x1b[1m\x1b[35m31030\x1b[0m"
-const coderEntrega = " Desafio: \x1b[1m\x1b[35mClase 4 - Manejo de Archivos\x1b[0m"
-const coderPoweredBy = "\x1b[1m\x1b[34mPowered by NodeJS / CoderHouse\x1b[0m"
+const ANSI_ESC = "\x1b";
+const ANSI_Reset = ANSI_ESC + "[0m";
+const ANSI_Bright = ANSI_ESC + "[1m";
+const ANSI_Dim = ANSI_ESC + "[2m";
+const ANSI_Underscore = ANSI_ESC + "[4m";
+const ANSI_Blink = ANSI_ESC + "[5m";
+const ANSI_Reverse = ANSI_ESC + "[7m";
+const ANSI_Hidden = ANSI_ESC + "[8m";
+const ANSI_FgBlack = ANSI_ESC + "[30m";
+const ANSI_FgRed = ANSI_ESC + "[31m";
+const ANSI_FgGreen = ANSI_ESC + "[32m";
+const ANSI_FgYellow = ANSI_ESC + "[33m";
+const ANSI_FgBlue = ANSI_ESC + "[34m";
+const ANSI_FgMagenta = ANSI_ESC + "[35m";
+const ANSI_FgCyan = ANSI_ESC + "[36m";
+const ANSI_FgWhite = ANSI_ESC + "[37m";
+const ANSI_BgBlack = ANSI_ESC + "[40m";
+const ANSI_BgRed = ANSI_ESC + "[41m";
+const ANSI_BgGreen = ANSI_ESC + "[42m";
+const ANSI_BgYellow = ANSI_ESC + "[43m";
+const ANSI_BgBlue = ANSI_ESC + "[44m";
+const ANSI_BgMagenta = ANSI_ESC + "[45m";
+const ANSI_BgCyan = ANSI_ESC + "[46m";
+const ANSI_BgWhite = ANSI_ESC + "[47m";
+
+const KEY_RETURN = 'return';
+const EXIT_KEYPRESS = "c"
+
+const coderPropaganda = ANSI_Reset + " Alumno : " + ANSI_Bright + ANSI_FgMagenta + "Juan Vidal" + ANSI_Reset + " - Comisión: " + ANSI_Bright + ANSI_FgMagenta + "31030" + ANSI_Reset;
+const coderEntrega = ANSI_Reset + " Desafio: " + ANSI_Bright + ANSI_FgMagenta + "Clase 4 - Manejo de Archivos" + ANSI_Reset;
+const coderPoweredBy = ANSI_Reset + ANSI_Bright + ANSI_FgBlue + "Powered by NodeJS / CoderHouse" + ANSI_Reset;
 const NL = require('os').EOL;
 //main debug flag
 let debug = true;
 
-// Desafio
 const readline = require('readline');
+const fs = require('fs');
 const keyMap = new Map();
+
 keyMap.set('1', 'save(Object)');
 keyMap.set('2', 'getById(Number)');
 keyMap.set('3', 'getAll(): Object[]');
@@ -32,23 +60,31 @@ function sayBye() {
 };
 
 function sayError(err) {
-    console.error("\x1b[41m> ERROR! ", `[${err.name}] (${err.code}) - ${err.message}.`);
+    console.error(ANSI_Reset + ANSI_BgRed + " ERROR! ", `[${err.name}] (${err.code}) - ${err.message}.`);
 };
+
+const sayDebug = (message) => {
+    if (debug)
+        console.log("   >>> DEBUG:", message);
+}
 
 function fileExists(strFile) {
-    const fs = require('fs');
-    fs.open(strFile, fs.F_OK, (err) => {
-        if (err) {
-            return false;
-        }
-        //file exists
-        return true;
-    })
+    return fs.existsSync(strFile);
 };
 
+function fileDelete(strFile) {
+    let retVal = false;
+    fs.unlinkSync(strFile, function (err) {
+        if (err) {
+            sayError(err);
+        }
+        retVal = true;
+    });
+    return retVal;
+};
+
+
 function createEmptyFile(strFile) {
-    const fs = require('fs');
-    // create an empty file
     try {
         fs.closeSync(fs.openSync(strFile, 'a'));
     } catch (error) {
@@ -59,13 +95,14 @@ function createEmptyFile(strFile) {
 function listKeys() {
     let strMenu = "";
     keyMap.forEach((value, key) => {
-        strMenu += (` \x1b[1m\x1b[35m${key}\x1b[0m ->\x1b[1m ${value}\x1b[0m  `);
+        strMenu += (` ${ANSI_Bright}${ANSI_FgMagenta}${key}${ANSI_Reset} ->${ANSI_Bright} ${value}${ANSI_Reset}  `);
     });
-    console.log(`${strMenu}${NL} \x1b[1m\x1b[35mCTRL + Q\x1b[0m -> \x1b[1mterminar\x1b[0m`);
+    const exitKey = String(EXIT_KEYPRESS).toUpperCase();
+    console.log(`${strMenu}${NL} ${ANSI_Bright}${ANSI_FgMagenta}CTRL + ${exitKey}${ANSI_Reset} -> ${ANSI_Bright}terminar${ANSI_Reset}`);
 };
 
 function sayMenu() {
-    console.log('\x1b[0m Seleccione una opción del menu - Funciones disponibles: \x1b[0m');
+    console.log(ANSI_Reset + ' Seleccione una opción del menu - Funciones disponibles: ' + ANSI_Reset);
     listKeys();
 }
 
@@ -74,10 +111,10 @@ function doMenuStuff() {
     readline.emitKeypressEvents(process.stdin);
     process.stdin.setRawMode(true);
     process.stdin.on('keypress', (str, key) => {
-        if (key.ctrl && key.name === 'q') {
+        if (key.ctrl && key.name === EXIT_KEYPRESS) {
             sayBye();
-            process.exit(); // eslint-disable-line no-process-exit
-        } else if (key && key.name === 'return') {
+            process.exit();
+        } else if (key && key.name === KEY_RETURN) {
             console.clear();
             listKeys();
         } else {
@@ -92,7 +129,10 @@ function doMenuStuff() {
 };
 
 async function runMenuOption(symbol, action) {
-    console.log(`\x1b[0m\x1b[33m ${symbol} \x1b[31m>> ${action}`);
+    console.clear();
+    sayHi();
+    console.log(`${ANSI_Reset}${ANSI_FgYellow} SELECCIONADA OPCION ${symbol} -> ${action} ${ANSI_FgRed}`);
+
 
     let oContenedor = new Contenedor("test.txt");
 
@@ -107,47 +147,51 @@ async function runMenuOption(symbol, action) {
         case 1: //save()
             strFileName = "test.txt";
             this.oContenedor = new Contenedor(strFileName);
-            console.log(`\x1b[31m  > Crear archivo default \'${strFileName}\' con 4 elementos`);
+            console.log(`${ANSI_Reset}${ANSI_FgRed}  > Crear archivo default \'${strFileName}\' con 3 elementos default y un iPhone`);
             this.newestProduct = await oContenedor.save(oNewProduct1);
             this.newestProduct = await oContenedor.save(oNewProduct2);
             this.newestProduct = await oContenedor.save(oNewProduct3);
-            console.log(`\x1b[32m  > OK. \x1b[0m`);
-            console.log("\x1b[31m  > Invocacion a método ::save()", NL, "  Datos del objeto a insertar:\x1b[0m");
+            console.log(`${ANSI_Reset}${ANSI_FgGreen}  > OK. ${ANSI_Reset}`);
+            console.log(ANSI_Reset + ANSI_FgRed + "  > Invocacion a método ::save()", NL, "  Datos del objeto a insertar:" + ANSI_Reset);
             console.log(oNewProduct);
             this.newestProduct = await oContenedor.save(oNewProduct);
-            console.log("\x1b[31m  > Se insertó nuevo objeto con ID=\x1b[0m", this.newestProduct, NL);
+            console.log(ANSI_Reset + ANSI_FgRed + "  > Se insertó nuevo objeto con ID=" + ANSI_Reset, this.newestProduct, NL);
             break;
 
         case 2: //getByID()
-            console.log("\x1b[31m  > Invocacion a método ::getById()", NL, "   Búsqueda por ID=", this.newestProduct);
+            console.log(ANSI_Reset + ANSI_FgRed + "  > Invocacion a método ::getById()", NL, "   Búsqueda por ID=", this.newestProduct);
             const oSearch = await oContenedor.getById(this.newestProduct);
-            console.log("\x1b[31m    Objeto Devuelto=\x1b[0m", oSearch, NL);
+            console.log(ANSI_Reset + ANSI_FgRed + "    Objeto Devuelto=" + ANSI_Reset, oSearch, NL);
             break;
 
         case 3: //getAll()
-            console.log("\x1b[31m  > Invocacion a método ::getAll()");
+            console.log(ANSI_Reset + ANSI_FgRed + "  > Invocacion a método ::getAll()");
             const oAll = await oContenedor.getAll();
-            console.log("\x1b[31m    Objeto Devuelto=\x1b[0m", oAll, NL);
+            console.log(ANSI_Reset + ANSI_FgRed + "    Objeto Devuelto=" + ANSI_Reset, oAll, NL);
             break;
 
         case 4: //deleteById(number)
-            console.log(`\x1b[31m  > Invocacion a método ::deleteById( ${this.newestProduct}`, ")", NL);
+            console.log(`${ANSI_Reset}${ANSI_FgRed}  > Invocacion a método ::deleteById( ${this.newestProduct}`, ")", NL);
             let retVal = await oContenedor.deleteById(this.newestProduct);
-            console.log("\x1b[31m    Resultado =\x1b[0m", await oContenedor.getAll(), NL);
+            console.log(ANSI_Reset + ANSI_FgRed + "    Resultado =" + ANSI_Reset, await oContenedor.getAll(), NL);
             break;
 
         case 5: //deleteAll()
-            console.log("\x1b[31m  > Invocacion a método ::deleteAll()", NL);
+            console.log(ANSI_Reset + ANSI_FgRed + "  > Invocacion a método ::deleteAll()", NL);
             await oContenedor.deleteAll();
             break;
 
-        case 6:
-            oContenedor = new Contenedor("productos.txt");
+        case 6: //crear "productos.txt"
+            const strFile = "productos.txt";
+            if (fileExists(strFile)) {
+                fileDelete(strFile);
+            }
+            oContenedor = new Contenedor(strFile);
             newestProduct = await oContenedor.save(oNewProduct1);
             newestProduct = await oContenedor.save(oNewProduct2);
             newestProduct = await oContenedor.save(oNewProduct3);
             const oAllProds = await oContenedor.getAll();
-            console.log(" \x1b[31m   Objeto Devuelto=\x1b[0m", oAllProds, NL);
+            console.log(ANSI_Reset + ANSI_FgRed + "   Objeto Devuelto=" + ANSI_Reset, oAllProds, NL);
             break;
 
         default:
@@ -156,9 +200,6 @@ async function runMenuOption(symbol, action) {
     sayMenu();
 };
 
-
-//Desafio - C3
-const fs = require('fs');
 
 class Product {
     constructor(title, price, thumbnail, id) {
@@ -176,11 +217,11 @@ class Contenedor {
     }
 
     async save(paramProduct) {
-        if (debug == true) {
-            console.log("begin save(); ");
-        }
+        sayDebug("begin save(); ");
+
 
         if (!fileExists(this.fileName)) {
+            sayDebug(`${this.fileName} not found. creating empty file.`);
             createEmptyFile(this.fileName);
         }
 
@@ -191,168 +232,127 @@ class Contenedor {
             oProduct.price = paramProduct.price;
             oProduct.thumbnail = paramProduct.thumbnail;
 
-            //Parse data file
             const fileData = await fs.promises.readFile(this.fileName, 'utf-8');
 
-            //file is empty
             if (fileData.length === 0) {
                 let objectInfo = [];
                 this.newId = oProduct.id = 1;
                 objectInfo.push(oProduct);
-                //write file increasing LastID
                 await fs.promises.writeFile(
                     this.fileName,
                     JSON.stringify(objectInfo, null, '\t')
                 );
-                if (debug == true) {
-                    console.log("File is empty. Inserted ID=", this.newId);
-                    return this.newId;
-                }
-            }
-            //file has contents, try to parse JSON data
-            else {
+                sayDebug("File is empty. Inserted ID=", this.newId);
+                return this.newId;
+
+            } else {
                 let objectInfo = JSON.parse(fileData);
 
-                //test for empty results
                 if (objectInfo.length === 0) {
                     this.newId = oProduct.id = 1;
                     objectInfo.push(oProduct);
-                    //write file increasing LastID
                     await fs.promises.writeFile(
                         this.fileName,
                         JSON.stringify(objectInfo, null, '\t')
                     );
-                    if (debug == true) {
-                        console.log("File is empty. Inserted ID=", this.newId);
-                    }
+                    sayDebug("File is empty. Inserted ID=", this.newId);
                     return this.newId;
 
                 } else {
-                    //get MAX ID
                     let max = objectInfo.reduce((a, b) => a.id > b.id ? a : b).id;
-                    if (debug == true) {
-                        console.log('maxId: ', max)
-                    }
-                    //inc MAX ID
+                    sayDebug('maxId: ', max)
                     this.newId = oProduct.id = max + 1;
-                }
-                if (debug == true) {
-                    console.log('this.newId = oProduct.id = max + 1= ', this.newId, oProduct.id, max + 1)
                 }
                 objectInfo.push(oProduct);
 
-                //write file increasing LastID
                 await fs.promises.writeFile(
                     this.fileName,
                     JSON.stringify(objectInfo, null, '\t')
                 );
-                if (debug == true) {
-                    console.log("Inserted ID=", this.newId);
-                }
+                sayDebug("Inserted ID=", this.newId);
             }
-
-            if (debug == true) {
-                console.log("exit save(); retval=", this.newId)
-            }
-            return (this.newId); //new ID
+            sayDebug("exit save(); retval=", this.newId)
+            return (this.newId);
         } catch (error) {
             sayError(error);
         }
-    } //end function save()
-
+    }
     // getById(Number): Object - Recibe un id y devuelve el objeto con ese id, o null si no está.
     async getById(paramId) {
         try {
-            //Parse data file
-            const fileData = await fs.promises.readFile(this.fileName, 'utf-8');
-
-            //file has contents, try to parse JSON data
-            if (fileData.length === 0) {
-                if (debug == true) {
-                    console.log("::getById() - File is empty. ");
-                }
+            if (!fileExists(this.fileName)) {
+                console.log(`    El archivo ${this.fileName} no existe.`);
                 return null;
             }
-            //file has contents, try to parse JSON
-            else {
+
+            const fileData = await fs.promises.readFile(this.fileName, 'utf-8');
+
+            if (fileData.length === 0) {
+                sayDebug("::getById() - File is empty. ");
+                return null;
+            } else {
                 const objectInfo = JSON.parse(fileData);
 
                 const objSearch = objectInfo.find(objectInfo => objectInfo.id === paramId);
-                //test for empty results
                 if (objSearch && Object.keys(objSearch).length === 0 &&
                     Object.getPrototypeOf(objSearch) === Object.prototype) {
-                    if (debug == true) {
-                        console.log("::getById() - ID ", paramId, "not found, returning null");
-                    }
+                    sayDebug("::getById() - ID ", paramId, "not found, returning null");
                     return null;
                 }
-                if (debug == true) {
-                    console.log("objSearch=", objSearch);
-                }
+                sayDebug("objSearch=", objSearch);
                 return objSearch;
             }
         } catch (error) {
             sayError(error);
         }
-    } //end function getById()
+    }
 
     // getAll(): Object[] - Devuelve un array con los objetos presentes en el archivo.
     async getAll() {
         try {
-            //Parse data file
-            const fileData = await fs.promises.readFile(this.fileName, 'utf-8');
-            //file has contents, try to parse JSON data
-            if (fileData.length === 0) {
-                if (debug == true) {
-                    console.log("::getAll() - File is empty. ");
-                }
+            if (!fileExists(this.fileName)) {
+                console.log(`    El archivo ${this.fileName} no existe.`);
                 return null;
             }
-            //file has contents, try to parse JSON
-            else {
+
+            const fileData = await fs.promises.readFile(this.fileName, 'utf-8');
+            if (fileData.length === 0) {
+                sayDebug("::getAll() - File is empty. ");
+                return null;
+            } else {
                 let objectInfo = JSON.parse(fileData);
-                //test for empty results
                 if (objectInfo && Object.keys(objectInfo).length === 0 &&
                     Object.getPrototypeOf(objectInfo) === Object.prototype) {
-                    if (debug == true) {
-                        console.log("::getAll() - no objects found, returning null");
-                    }
+                    sayDebug("::getAll() - no objects found, returning null");
                     return null;
                 }
-                if (debug == true) {
-                    console.log("::getAll() - objects found, returning ...", objectInfo);
-                }
+                sayDebug("::getAll() - objects found, returning ...", objectInfo);
                 return objectInfo;
             }
         } catch (err) {
             sayError(err);
         }
-    } //end function getAll()
+    }
 
     async deleteById(paramId) {
         try {
-            //Parse data file
-            const fileData = await fs.promises.readFile(this.fileName, 'utf-8');
-            //file has contents, try to parse JSON data
-            if (fileData.length === 0) {
-                if (debug == true) {
-                    console.log("::getAll() - File is empty. ");
-                }
+            if (!fileExists(this.fileName)) {
+                console.log(`    El archivo ${this.fileName} no existe.`);
                 return null;
             }
-            //file has contents, try to parse JSON
-            else {
+
+            const fileData = await fs.promises.readFile(this.fileName, 'utf-8');
+            if (fileData.length === 0) {
+                sayDebug("::getAll() - File is empty. ");
+                return null;
+            } else {
                 const objectInfo = JSON.parse(fileData);
-                //test for empty results
                 if (objectInfo && Object.keys(objectInfo).length === 0 &&
                     Object.getPrototypeOf(objectInfo) === Object.prototype) {
-                    if (debug == true) {
-                        console.log("::deleteById() - no objects found, returning null");
-                    }
+                    sayDebug("::deleteById() - no objects found, returning null");
                     return null;
                 }
                 const objSearch = objectInfo.filter(objSearch => objSearch.id !== paramId);
-                //save file
                 await fs.promises.writeFile(
                     this.fileName,
                     JSON.stringify(objSearch, null, '\t')
@@ -363,20 +363,20 @@ class Contenedor {
         } catch (err) {
             sayError(err);
         }
-    } //end function deleteById(Number)
+    }
 
     // deleteAll(): void - Elimina todos los objetos presentes en el archivo.
     async deleteAll() {
-
         try {
             await fs.promises.writeFile(this.fileName, '[]');
         } catch (err) {
             sayError(err);
         }
-    } //end function deleteAll()
-} //end class Contenedor
+    }
+}
 
-const main = async () => {
+//const main = async () => {
+function main() {
     doMenuStuff();
 }
 
