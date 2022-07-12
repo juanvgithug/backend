@@ -282,7 +282,6 @@ class Contenedor {
             }
 
             const fileData = await fs.promises.readFile(this.fileName, 'utf-8');
-
             if (fileData.length === 0) {
                 sayDebug("::getById() - File is empty. ");
                 return null;
