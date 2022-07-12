@@ -83,7 +83,6 @@ function fileDelete(strFile) {
     return retVal;
 };
 
-
 function createEmptyFile(strFile) {
     try {
         fs.closeSync(fs.openSync(strFile, 'a'));
@@ -219,7 +218,6 @@ class Contenedor {
     async save(paramProduct) {
         sayDebug("begin save(); ");
 
-
         if (!fileExists(this.fileName)) {
             sayDebug(`${this.fileName} not found. creating empty file.`);
             createEmptyFile(this.fileName);
@@ -244,10 +242,9 @@ class Contenedor {
                 );
                 sayDebug("File is empty. Inserted ID=", this.newId);
                 return this.newId;
-
             } else {
-                let objectInfo = JSON.parse(fileData);
 
+                let objectInfo = JSON.parse(fileData);
                 if (objectInfo.length === 0) {
                     this.newId = oProduct.id = 1;
                     objectInfo.push(oProduct);
@@ -257,7 +254,6 @@ class Contenedor {
                     );
                     sayDebug("File is empty. Inserted ID=", this.newId);
                     return this.newId;
-
                 } else {
                     let max = objectInfo.reduce((a, b) => a.id > b.id ? a : b).id;
                     sayDebug('maxId: ', max)
@@ -292,7 +288,6 @@ class Contenedor {
                 return null;
             } else {
                 const objectInfo = JSON.parse(fileData);
-
                 const objSearch = objectInfo.find(objectInfo => objectInfo.id === paramId);
                 if (objSearch && Object.keys(objSearch).length === 0 &&
                     Object.getPrototypeOf(objSearch) === Object.prototype) {
