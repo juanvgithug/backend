@@ -369,7 +369,6 @@ class Contenedor {
     }
 }
 
-//const main = async () => {
 function main() {
     doMenuStuff();
 }
