@@ -214,7 +214,7 @@ class Contenedor {
         this.fileName = fileName;
         this.newId = 0;
     }
-
+    //save(Object): Number - Recibe un objeto, lo guarda en el archivo, devuelve el id asignado.
     async save(paramProduct) {
         sayDebug("begin save(); ");
 
@@ -327,7 +327,7 @@ class Contenedor {
             sayError(err);
         }
     }
-
+    //deleteById(Number): boolean - Elimina del archivo el objeto con el id buscado.
     async deleteById(paramId) {
         try {
             if (!fileExists(this.fileName)) {
@@ -353,7 +353,6 @@ class Contenedor {
                 );
                 return true;
             }
-
         } catch (err) {
             sayError(err);
         }
