@@ -32,7 +32,7 @@ const KEY_RETURN = 'return';
 const EXIT_KEYPRESS = "c"
 
 const coderPropaganda = ANSI_Reset + " Alumno : " + ANSI_Bright + ANSI_FgMagenta + "Juan Vidal" + ANSI_Reset + " - Comisión: " + ANSI_Bright + ANSI_FgMagenta + "31030" + ANSI_Reset;
-const coderEntrega = ANSI_Reset + " Desafio: " + ANSI_Bright + ANSI_FgMagenta + "Clase 4 - Manejo de Archivos" + ANSI_Reset;
+const coderEntrega = ANSI_Reset + " Desafio: " + ANSI_Bright + ANSI_FgMagenta + "Clase 6 - Servidores Web" + ANSI_Reset;
 const coderPoweredBy = ANSI_Reset + ANSI_Bright + ANSI_FgBlue + "Powered by NodeJS / CoderHouse" + ANSI_Reset;
 const NL = require('os').EOL;
 

@@ -40,4 +40,4 @@ npm run dev
 ```
 
 Preview en
-https://spiritual-sleet-honeycrisp.glitch.me/
+https://materialistic-meadow-snowshoe.glitch.me/
