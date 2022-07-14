@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <!-- Normalize.Css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <!-- Font Awesome  -->
+    <script src="https://kit.fontawesome.com/850f9c20c6.js" crossorigin="anonymous"></script>
+
+    <!-- FavIcon Support -->
+    <!-- Browsers -->
+    <link rel="icon" href="./assets/img/favicons/favicon.ico">
+    <link rel="icon" sizes="16x16" href="./assets/img/favicons/favicon-16x16.png">
+    <link rel="icon" sizes="32x32" href="./assets/img/favicons/favicon.ico">
+    <link rel="icon" sizes="192x192" href="./assets/img/favicons/android-chrome-192x192.png">
+    <link rel="icon" sizes="512x512" href="./assets/img/favicons/android-chrome-512x512.png">
+    <!-- Android -->
+    <link rel="shortcut icon" sizes="196x196" href="./assets/img/favicons/android-chrome-192x192.png">
+    <!-- iOS -->
+    <link rel="apple-touch-icon" sizes="120x120" href="./assets/img/favicons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./assets/img/favicons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/favicons/apple-touch-icon.png">
+    <!-- Windows 8 IE 10 -->
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="./assets/img/favicons/favicon.ico">
+
+    <link rel="stylesheet" href="./assets/css/main.css" />
+
+    <title>BackEnd | Clase 6</title>
+</head>
+
+<body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <img src="./assets/img/favicons/favicon.ico" alt="" width="32" height="32">
+            <a class="navbar-brand" href="#">Curso BackEnd</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+                aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i
+                                class="fas fa-home"></i>&nbsp;Principal</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li> -->
+                </ul>
+                <!-- <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <button class="btn btn-outline-success" type="submit">
+                        Search
+                    </button>
+                </form> -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Begin page content -->
+    <main class="flex-shrink-0 ">
+        <div class="jumbotron text-center topPagina">
+        </div>
+
+        <div class="jumbotron text-center bgTopText sombra " style="top: -7.8em;">
+            <h2>Programación BackEnd</h1>
+                <div class="container">
+                    <h1 class="mt-5">Clase #6 : Servidores Web</h1>
+                    <br>
+                    <p class="lead">
+                        Se entrega el desafío
+                        <code class="small">Servidor con express</code> 
+                    </p>
+                    <div class="row justify-content-start">
+                        <div class="d-grid gap-2 col-4 mx-auto">
+                            <div class="row"><code class="small"><i class="far fa-file-alt"></i> index.js</code>
+                            </div>
+                            <div class="row"> <br> </div>
+                            <div class="row"><button type="button" class="btn btn-outline-primary"
+                                    onclick="fButtonHandler(1)"><i class="fas fa-user-tie"></i> getProductsAll()</button>
+                            </div>
+                            <div class="row"><button type="button" class="btn btn-outline-success"
+                                    onclick="fButtonHandler(2)"><i class="fas fa-paw"></i> getProductsRandom()</button></div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        </div>
+
+        </div>
+
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container-fluid">
+            <div class="row row-cols-2">
+                <div class="row row-cols-auto">
+                    <div class="col"><i class="fas fa-school"></i>&nbsp;Curso : Back End &nbsp;</div>
+                    <div class="col"><i class="fas fa-user-graduate"> &nbsp; </i>Alumno: Juan Vidal</div>
+                    <div class="col"><i class="fas fa-chalkboard-teacher"> &nbsp;</i>Comisión: 31030</div>
+                </div>
+                <div class="row row-cols-auto">
+                    <div class="col">
+                        <div class="col colPoweredBy">Powered by</div>
+                        <div class="col"> <img src="assets/img/node.png" alt="node" /></div>
+                    </div>
+                    <div class="col"> <img src="assets/img/coderhouse_logo_black.jpg" alt="CODERHOUSE" /></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+<!-- BootStrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+</script>
+<!-- sweet Alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.6/dist/sweetalert2.all.min.js" integrity="sha256-wXU6WLtA53u7Dbfr3jM4o6Xye6JKf6kf05poM4ubt7Y=" crossorigin="anonymous"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Main Scripts -->
+<script src="./assets/js/main.js"></script>
+
+</html>
