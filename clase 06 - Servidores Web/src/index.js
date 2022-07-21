@@ -43,9 +43,9 @@ app.get('/productos', (request, response) => {
 
 app.get('/productoRandom', (request, response) => {
   const retval = products.getProductsRandom("./src/productos.txt")
-    .then(ProductoRandom => (
+    .then(productoRandom => (
       response.json({
-        ProductoRandom
+        productoRandom
       })
     ));
 });
