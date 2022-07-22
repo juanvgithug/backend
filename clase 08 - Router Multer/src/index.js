@@ -10,6 +10,10 @@ const app = express();
 const mainRouter = require('./routes/be8.routes');
 
 app.use(express.static(path.join(__dirname + "/public")));
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 
 console.clear();
 toolBox.sayHi();
@@ -35,11 +39,4 @@ app.get("/api", (req, res) => {
   });
   console.log(` -> Sent greeting.`);
 });
-
-//Set up Routes
-app.use(express.json());
-app.use(express.urlencoded({
-  extended: true
-}));
-
 app.use('/api', mainRouter);

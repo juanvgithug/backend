@@ -2,7 +2,6 @@
 // Refactor de : Desafio Clase 4 - Manejo de Archivos
 
 const fs = require('fs');
-
 const toolBox = require('./toolBox');
 
 class Product {
@@ -78,6 +77,61 @@ class Contenedor {
             toolBox.sayError(error);
         }
     }
+    //update
+    async update(paramProduct) {
+        toolBox.sayDebug("begin update(); ");
+
+        if (!toolBox.fileExists(this.fileName)) {
+            toolBox.sayDebug(`${this.fileName} not found. creating empty file.`);
+            toolBox.createEmptyFile(this.fileName);
+        }
+
+        try {
+            let oProduct = new Product;
+            oProduct.title = paramProduct.title;
+            oProduct.price = paramProduct.price;
+            oProduct.thumbnail = paramProduct.thumbnail;
+            oProduct.id = paramProduct.id;
+
+            const fileData = await fs.promises.readFile(this.fileName, 'utf-8');
+            if (fileData.length === 0) {
+                let objectInfo = [];
+                this.newId = oProduct.id;
+                objectInfo.push(oProduct);
+                await fs.promises.writeFile(
+                    this.fileName,
+                    JSON.stringify(objectInfo, null, '\t')
+                );
+                toolBox.sayDebug("File is empty. Created data and inserted new product with ID=", this.newId);
+                return this.newId;
+            } else {
+                let objectInfo = JSON.parse(fileData);
+                if (objectInfo.length === 0) {
+                    this.newId = oProduct.id; //save product with supplied id
+                    objectInfo.push(oProduct);
+                    await fs.promises.writeFile(
+                        this.fileName,
+                        JSON.stringify(objectInfo, null, '\t')
+                    );
+                    toolBox.sayDebug("File has no JSON data. Created data and inserted new product with ID=", this.newId);
+                    return this.newId;
+                } else {
+                    this.newId = oProduct.id;
+                }
+                toolBox.sayDebug('this.newId = oProduct.id ', this.newId, oProduct.id)
+                objectInfo.push(oProduct);
+                await fs.promises.writeFile(
+                    this.fileName,
+                    JSON.stringify(objectInfo, null, '\t')
+                );
+                toolBox.sayDebug("Inserted ID=", this.newId);
+            }
+            toolBox.sayDebug("exit save(); retval=", this.newId)
+            return (this.newId); //new ID
+        } catch (error) {
+            toolBox.sayError(error);
+        }
+    }
     // getById(Number): Object - Recibe un id y devuelve el objeto con ese id, o null si no está.
     async getById(paramId) {
         try {
@@ -93,7 +147,7 @@ class Contenedor {
             } else {
                 const objectInfo = JSON.parse(fileData);
                 toolBox.sayDebug("::getById() - ID ", paramId, "objectInfo", objectInfo);
-                const objSearch = objectInfo.find(objectInfo => objectInfo.id === paramId);
+                const objSearch = objectInfo.find(element => String(element.id) === String(paramId));
                 if (objSearch && Object.keys(objSearch).length === 0 &&
                     Object.getPrototypeOf(objSearch) === Object.prototype) {
                     toolBox.sayDebug("::getById() - ID ", paramId, "not found, returning null");
@@ -152,7 +206,7 @@ class Contenedor {
                     toolBox.sayDebug("::deleteById() - no objects found, returning null");
                     return null;
                 }
-                const objSearch = objectInfo.filter(objSearch => objSearch.id !== paramId);
+                const objSearch = objectInfo.filter(element => String(element.id) !== String(paramId));
                 await fs.promises.writeFile(
                     this.fileName,
                     JSON.stringify(objSearch, null, '\t')
@@ -178,5 +232,4 @@ class Contenedor {
 module.exports = {
     Contenedor: Contenedor,
     Product: Product
-
 };

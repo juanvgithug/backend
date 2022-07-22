@@ -49,7 +49,6 @@ exports.createProduct = async (req, res) => {
     const body = req.body;
     class Product {
         constructor(title, price, thumbnail, id) {
-            if (!(this instanceof Product)) return new Product(title, price, thumbnail, id);
             this.title = title;
             this.price = price;
             this.thumbnail = thumbnail;
@@ -94,14 +93,13 @@ exports.deleteProductById = async (req, res) => {
     return res.status(200).json(data);
 };
 
-//delete prod by ID
+//update prod by ID
 exports.updateProductById = async (req, res) => {
     
     let products;
     const body = req.body;
     class Product {
         constructor(title, price, thumbnail, id) {
-            if (!(this instanceof Product)) return new Product(title, price, thumbnail, id);
             this.title = title;
             this.price = price;
             this.thumbnail = thumbnail;

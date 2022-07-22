@@ -1,9 +1,7 @@
 /*
-
 Curso : BackEnd
 Alumno : Juan Vidal 
 Comisión:  31030
-
 */
 
 // General 
