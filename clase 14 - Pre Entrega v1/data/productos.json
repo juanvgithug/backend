@@ -1,0 +1,52 @@
+[
+	{
+		"id": 1,
+		"timestamp": 1660878060815,
+		"title": "Escuadra",
+		"description": "",
+		"code": "CODER-0000000000386-PROD",
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+		"price": 123.45,
+		"stock": 13
+	},
+	{
+		"id": 2,
+		"timestamp": 1660878060831,
+		"title": "Calculadora",
+		"description": "",
+		"code": "CODER-0000000317818-PROD",
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+		"price": 234.56,
+		"stock": 13
+	},
+	{
+		"id": 3,
+		"timestamp": 1660878060845,
+		"title": "Globo Terráqueo",
+		"description": "",
+		"code": "CODER-0000000017729-PROD",
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
+		"price": 345.67,
+		"stock": 13
+	},
+	{
+		"id": 4,
+		"timestamp": 1660878060859,
+		"title": "iPhone 13 Pro Max",
+		"description": "",
+		"code": "CODER-0000000000257-PROD",
+		"thumbnail": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-pro-max-graphite-select?wid=470&hei=556&fmt=png-alpha&.v=1645552346288",
+		"price": 1590,
+		"stock": 13
+	},
+	{
+		"id": "5",
+		"timestamp": 1660878114965,
+		"title": "Escuadra",
+		"description": "la escuadra  super !!!",
+		"code": 1,
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+		"price": 13.26,
+		"stock": 13
+	}
+]
