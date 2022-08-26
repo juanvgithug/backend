@@ -1,6 +1,6 @@
 // Alumno : Juan Vidal - Comisión 31030
 
-//.env config
+
 require('dotenv').config();
 const path = require('path');
 const toolBox = require('../helpers/hToolbox');

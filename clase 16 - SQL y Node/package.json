@@ -1,0 +1,23 @@
+{
+  "name": "backend-clase16",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "ejs": "^3.0.2",
+    "express": "^4.17.1",
+    "express-handlebars": "^6.0.5",
+    "fs-extra": "^10.1.0",
+    "knex": "^2.0.0",
+    "mysql": "^2.18.1",
+    "socket.io": "^4.4.1",
+    "sqlite3": "^5.0.8"
+  }
+}

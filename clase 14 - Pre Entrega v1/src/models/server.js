@@ -2,7 +2,7 @@
 
 debug = require('debug');
 
-//.env config
+
 require('dotenv').config();
 
 //main debug flag

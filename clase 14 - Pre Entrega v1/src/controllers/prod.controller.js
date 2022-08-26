@@ -2,7 +2,7 @@
 
 debug = require('debug');
 
-//.env config
+
 require('dotenv').config();
 const path = require('path');
 const chalk = require("chalk");

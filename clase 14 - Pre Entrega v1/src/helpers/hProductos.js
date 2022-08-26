@@ -1,6 +1,6 @@
 // Alumno : Juan Vidal - Comisión 31030
 
-//.env config
+
 require('dotenv').config("/.env");
 debug = require('debug');
 const path = require('path');

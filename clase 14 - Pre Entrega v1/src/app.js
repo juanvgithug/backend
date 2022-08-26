@@ -2,10 +2,7 @@
 // Desafio Clase 14 - Pre Entrega v1
 
 debug = require('debug');
-
-//.env config
 require('dotenv').config("/.env");
-
 toolBox = require('./helpers/hToolbox');
 
 let eCommerceServer = require('./models/server');

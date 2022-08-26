@@ -2,7 +2,7 @@
 
 debug = require('debug');
 const express = require('express');
-//.env config
+
 require('dotenv').config();
 const path = require('path');
 const toolBox = require('../helpers/hToolbox');
